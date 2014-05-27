@@ -71,7 +71,7 @@ app.directive('navGroupItem', function () {
     return {
         link: function(scope, element){
             element.bind('click', function () {
-                element.parent().find('a').remove('active');
+                element.closest('.panel-group').find('a').removeClass('active');
                 element.addClass('active');
             })
         }

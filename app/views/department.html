@@ -1,11 +1,11 @@
 <div class="tree well" family="treeFamily">
-    <ul dtree family="treeFamily" action="action"></ul>
+    <ul dtree family="treeFamily"></ul>
 </div>
 
 <script type="text/ng-template" id="dtree.html">
     <li ng-repeat="child in family.children" >
-        <span><i class="glyphicon" ng-class="child.children.length == 0 ? 'glyphicon-leaf' : 'glyphicon-minus-sign'"></i> {{child.name}}</span>
-        <a href="" ng-click="action(child.name)" >action</a>
-        <ul dtree family="child" ng-if="child.children.length > 0"></ul>
+        <span><i class="glyphicon" ng-class="{'glyphicon-leaf': child.children.length == 0, 'glyphicon-minus-sign': child.children.length > 0}"></i> {{child.name}}</span>
+        <a href="" ng-click="a(child.name)" >action</a>
+        <ul dtree family="child" ng-if="child.children.length > 0" ></ul>
     </li>
 </script>

@@ -17,9 +17,9 @@ app.controller('DepartmentCtrl', function ($scope, $log) {
 
     $scope.treeFamily = treeData(data);
 
-    $scope.action = function(name){
-        $log.info(name);
-    }
+    $scope.$on('department_add', function(event, data){
+        console.log(data);
+    })
 
 });
 
@@ -27,15 +27,14 @@ app.directive("dtree", function (RecursionHelper) {
     return {
         restrict: "A",
         scope: {
-            family: '=',
-            action: '='
+            family: '='
         },
-        templateUrl: 'dtree.html',
-        controller: function($scope, $log){
-            $scope.action = function(name){
-                $log.info(name);
+        controller: function($scope, $rootScope){
+            $scope.a = function(name){
+                $rootScope.$broadcast('department_add', {node: name})
             }
         },
+        templateUrl: 'dtree.html',
         compile: function (element) {
             return RecursionHelper.compile(element, function (scope, iElement, iAttrs, controller, transcludeFn) {
                 // Define your normal link function here.
