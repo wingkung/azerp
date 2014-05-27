@@ -1,0 +1,8 @@
+<div ng-switch="currentContent">
+    <div ng-switch-default="home" >
+        <div ng-include="'views/home.html'" ng-controller="HomeCtrl"></div>
+    </div>
+    <div ng-switch-when="department" >
+        <div ng-include="'views/department.html'" ng-controller="DepartmentCtrl"></div>
+    </div>
+</div>
