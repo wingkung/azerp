@@ -1,7 +1,7 @@
 var app = angular.module('azerpApp');
 app.controller('DepartmentCtrl', function ($scope, $timeout) {
     //console.log($scope);
-    $scope.treeFamily = {
+    /*$scope.treeFamily = {
         children: [
             {name: "Parent",
                 children: [
@@ -29,31 +29,24 @@ app.controller('DepartmentCtrl', function ($scope, $timeout) {
                 ]
             }
         ]
+    };*/
+
+    $scope.treeFamily = {
+        children: []
     };
 
+
     var data = [
-        {name: '电器', depth:0},
-        {name: '冰箱', depth:1},
-        {name: '双门', depth:2},
-        {name: '单门', depth:2},
-        {name: '电视', depth:1},
-        {name: '等离子', depth:2}
+        {name: '电器', depth:0}, //[0]
+        {name: '冰箱', depth:1}, //[0,0]
+        {name: '双门', depth:2}, //[0,0,0]
+        {name: '单门', depth:2}, //[0,0,1]
+        {name: '电视', depth:1}, //[0,1]
+        {name: '等离子', depth:2} //[0,1,0]
     ]
 
+    $scope.treeFamily = treeData(data);
 
-    function toJson(data){
-        var treeFamily = {children: []};
-        var maxDepth = 0;
-        for (var i in data){
-            if (data[i].depth > maxDepth){
-                maxDepth = data[i].depth;
-            }
-        }
-
-        for (var i = 0; i <= maxDepth; i++){
-
-        }
-    }
 });
 
 app.directive("dtree", function (RecursionHelper) {
@@ -71,3 +64,37 @@ app.directive("dtree", function (RecursionHelper) {
         }
     };
 });
+
+
+function treeData(data){
+    var paths = [];
+    for (var i in data){
+        var depth = data[i].depth;
+        var path = [];
+        paths.splice(depth + 1, paths.length - depth + 1)
+        if (paths[depth] != undefined){
+            paths[depth] += 1;
+        }else{
+            paths[depth] = 0;
+        }
+        for(var j =0 ; j < depth + 1; j++){
+            path.push(paths[j]);
+        }
+        data[i].path = path;
+    }
+    var tree = {children:[]};
+
+    for (var i in data){
+        var depth = data[i].depth;
+        var path = data[i].path;
+        var name = data[i].name;
+        var child = tree;
+        for (var j=0; j<depth + 1; j++){
+            if (child.children[path[j]] == undefined){
+                child.children[path[j]] = {name: name, children:[]};
+            }
+            child = child.children[path[j]];
+        }
+    }
+    return tree;
+}
