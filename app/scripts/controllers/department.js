@@ -1,35 +1,5 @@
 var app = angular.module('azerpApp');
-app.controller('DepartmentCtrl', function ($scope, $timeout) {
-    //console.log($scope);
-    /*$scope.treeFamily = {
-        children: [
-            {name: "Parent",
-                children: [
-                    {
-                        name: "Child1",
-                        children: [
-                            {
-                                name: "Grandchild1",
-                                children: []
-                            },
-                            {
-                                name: "Grandchild2",
-                                children: []
-                            },
-                            {
-                                name: "Grandchild3",
-                                children: []
-                            }
-                        ]
-                    },
-                    {
-                        name: "Child2",
-                        children: []
-                    }
-                ]
-            }
-        ]
-    };*/
+app.controller('DepartmentCtrl', function ($scope, $log) {
 
     $scope.treeFamily = {
         children: []
@@ -47,13 +17,25 @@ app.controller('DepartmentCtrl', function ($scope, $timeout) {
 
     $scope.treeFamily = treeData(data);
 
+    $scope.action = function(name){
+        $log.info(name);
+    }
+
 });
 
 app.directive("dtree", function (RecursionHelper) {
     return {
         restrict: "A",
-        scope: {family: '='},
+        scope: {
+            family: '=',
+            action: '='
+        },
         templateUrl: 'dtree.html',
+        controller: function($scope, $log){
+            $scope.action = function(name){
+                $log.info(name);
+            }
+        },
         compile: function (element) {
             return RecursionHelper.compile(element, function (scope, iElement, iAttrs, controller, transcludeFn) {
                 // Define your normal link function here.
