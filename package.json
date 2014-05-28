@@ -4,7 +4,8 @@
     "dependencies": {
         "express": "3.4.8",
         "multer": "*",
-        "async": "*"
+        "async": "*",
+        "mysql": "*"
     },
     "devDependencies": {
         "grunt": "~0.4.1",

@@ -10,9 +10,9 @@ app.directive("tree", function($timeout){
         link: function(scope, element){
             scope.$watch('family', function(){
                 $timeout(function() {
-                    element.find('li:has(ul)').addClass('parent_li').find(' > span').attr('title', '展开');
-                    element.find('li.parent_li > span').on('click', function (e) {
-                        var children = $(this).parent('li.parent_li').find(' > ul > li');
+                    element.find('li:has(ul)').addClass('parent_li').find(' > div > span').attr('title', '展开');
+                    element.find('li.parent_li > div > span').on('click', function (e) {
+                        var children = $(this).closest('li.parent_li').find(' > ul > li');
                         if (children.is(":visible")) {
                             children.hide('fast');
                             $(this).attr('title', '收起').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
@@ -26,4 +26,5 @@ app.directive("tree", function($timeout){
             })
         }
     }
-})
+});
+

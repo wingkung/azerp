@@ -1,25 +1,24 @@
 var app = angular.module('azerpApp');
-app.controller('DepartmentCtrl', function ($scope, $log) {
+app.controller('DepartmentCtrl', function ($scope, departmentService, $log, $timeout) {
 
     $scope.treeFamily = {
         children: []
     };
+    departmentService.getTree().then(function (data) {
+        $scope.treeFamily = treeData(data);
+    }, function (data) {
+        $scope.error = '异常 ' + data.err;
+    });
 
+    $scope.$on('department_tree', function () {
+        departmentService.getTree().then(function (data) {
+            $scope.treeFamily = treeData(data);
+        }, function (data) {
+            $scope.error = '异常 ' + data.err;
+        });
+    });
 
-    var data = [
-        {name: '电器', depth:0}, //[0]
-        {name: '冰箱', depth:1}, //[0,0]
-        {name: '双门', depth:2}, //[0,0,0]
-        {name: '单门', depth:2}, //[0,0,1]
-        {name: '电视', depth:1}, //[0,1]
-        {name: '等离子', depth:2} //[0,1,0]
-    ]
-
-    $scope.treeFamily = treeData(data);
-
-    $scope.$on('department_add', function(event, data){
-        console.log(data);
-    })
+    $scope.hasError = false;
 
 });
 
@@ -29,8 +28,8 @@ app.directive("dtree", function (RecursionHelper) {
         scope: {
             family: '='
         },
-        controller: function($scope, $rootScope){
-            $scope.a = function(name){
+        controller: function ($scope, $rootScope) {
+            $scope.a = function (name) {
                 $rootScope.$broadcast('department_add', {node: name})
             }
         },
@@ -46,33 +45,57 @@ app.directive("dtree", function (RecursionHelper) {
     };
 });
 
-
-function treeData(data){
+app.directive('dnode', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            data: '='
+        },
+        controller: function ($scope, departmentService) {
+            $scope.nodeAdd = function (atnode) {
+                departmentService.nodeAdd($scope.childName, atnode);
+            };
+            $scope.nodeAddChild = function (atnode) {
+                departmentService.nodeAddChild($scope.childName, atnode);
+            };
+            $scope.nodeRename = function (atnode) {
+                departmentService.nodeRename($scope.newName, atnode);
+            }
+        },
+        templateUrl: 'dnode.html',
+        link: function (scope, element) {
+            element.find('button').bind('click', function () {
+                $(this).next('.node-input').toggleClass('hide');
+            })
+        }
+    }
+})
+function treeData(data) {
     var paths = [];
-    for (var i in data){
+    for (var i in data) {
         var depth = data[i].depth;
         var path = [];
         paths.splice(depth + 1, paths.length - depth + 1)
-        if (paths[depth] != undefined){
+        if (paths[depth] != undefined) {
             paths[depth] += 1;
-        }else{
+        } else {
             paths[depth] = 0;
         }
-        for(var j =0 ; j < depth + 1; j++){
+        for (var j = 0; j < depth + 1; j++) {
             path.push(paths[j]);
         }
         data[i].path = path;
     }
-    var tree = {children:[]};
+    var tree = {children: []};
 
-    for (var i in data){
+    for (var i in data) {
         var depth = data[i].depth;
         var path = data[i].path;
         var name = data[i].name;
         var child = tree;
-        for (var j=0; j<depth + 1; j++){
-            if (child.children[path[j]] == undefined){
-                child.children[path[j]] = {name: name, children:[]};
+        for (var j = 0; j < depth + 1; j++) {
+            if (child.children[path[j]] == undefined) {
+                child.children[path[j]] = {name: name, children: []};
             }
             child = child.children[path[j]];
         }
