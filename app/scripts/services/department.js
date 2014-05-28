@@ -37,7 +37,24 @@ app.factory('departmentService', function($http, $q, API){
             $http.put(API.url + 'api/department', {node: node, atnode: atnode})
                 .success(function(data){
                     if (data.err){
-
+                        defered.reject({err: data.err});
+                    }else{
+                        defered.resolve(data.data);
+                    }
+                })
+                .error(function(data, status){
+                    defered.reject({err: status});
+                });
+            return defered.promise;
+        },
+        nodeRemove: function(atnode){
+            var defered = $q.defer();
+            $http.delete(API.url + 'api/department', {atnode: atnode})
+                .success(function(data){
+                    if (data.err){
+                        defered.reject({err: data.err});
+                    }else{
+                        defered.resolve(data.data);
                     }
                 })
                 .error(function(data, status){

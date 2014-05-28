@@ -15,20 +15,24 @@
              ng-class="{'glyphicon-leaf': data.children.length == 0, 'glyphicon-minus-sign': data.children.length > 0}"></i> {{data.name}}</span>
     <button class="btn btn-xs btn-default">子项</button>
     <div class="node-input hide">
-        <input class="" ng-model="childName" ng-change="validNode(childName)">
+        <input class="" ng-model="childName" >
         <button class="btn btn-xs btn-success" ng-click="nodeAddChild(data.name)">提交</button>
     </div>
 
     <button class="btn btn-xs btn-default">同级</button>
     <div class="node-input hide">
-        <input class="" ng-model="nodeName" ng-change="validNode(nodeName)">
+        <input class="" ng-model="nodeName">
         <button class="btn btn-xs btn-success" ng-click="nodeAdd(data.name)">提交</button>
     </div>
 
     <button class="btn btn-xs btn-default">修改</button>
     <div class="node-input hide">
-        <input class="" ng-model="newName" ng-change="validNode(newName)">
+        <input class="" ng-model="newName">
         <button class="btn btn-xs btn-success" ng-click="nodeRename(data.name)">提交</button>
     </div>
 
+    <button class="btn btn-xs btn-default">删除</button>
+    <div class="node-input hide">
+        <button class="btn btn-xs btn-success" ng-click="nodeRemove(data.name)">提交</button>
+    </div>
 </script>

@@ -38,3 +38,22 @@ exports.remove = function(req, res){
         res.json({err: err, data: rows[0]});
     })
 };
+
+exports.rename = function(req, res){
+    var atnode = req.body.atnode;
+    var node = req.body.node;
+    if (atnode == undefined ){
+        res.json({err:'未提供重命名节点'});
+        return;
+    }
+    if (node == undefined || node == ''){
+        res.json({err:'未提供添加节点'});
+        return;
+    }
+
+    var sql = "update department set name=? where name=?";
+    query(sql, [node, atnode], function(err, rows){
+        res.json({err: err, data: rows[0]});
+    })
+};
+

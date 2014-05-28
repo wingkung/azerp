@@ -8,6 +8,7 @@ app.controller('DepartmentCtrl', function ($scope, departmentService, $log, $tim
         $scope.treeFamily = treeData(data);
     }, function (data) {
         $scope.error = '异常 ' + data.err;
+        $scope.hasError = true;
     });
 
     $scope.$on('department_tree', function () {
@@ -15,6 +16,7 @@ app.controller('DepartmentCtrl', function ($scope, departmentService, $log, $tim
             $scope.treeFamily = treeData(data);
         }, function (data) {
             $scope.error = '异常 ' + data.err;
+            $scope.hasError = true;
         });
     });
 
@@ -60,6 +62,9 @@ app.directive('dnode', function () {
             };
             $scope.nodeRename = function (atnode) {
                 departmentService.nodeRename($scope.newName, atnode);
+            };
+            $scope.nodeRemove = function(atnode){
+                departmentService.nodeRemove(atnode);
             }
         },
         templateUrl: 'dnode.html',
