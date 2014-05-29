@@ -48,8 +48,9 @@ app.factory('departmentService', function($http, $q, API){
             return defered.promise;
         },
         nodeRemove: function(atnode){
+            console.log(atnode)
             var defered = $q.defer();
-            $http.delete(API.url + 'api/department', {atnode: atnode})
+            $http.delete(API.url + 'api/department/' + atnode)
                 .success(function(data){
                     if (data.err){
                         defered.reject({err: data.err});

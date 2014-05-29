@@ -28,7 +28,7 @@ exports.add = function(req, res){
 };
 
 exports.remove = function(req, res){
-    var atnode = req.body.atnode;
+    var atnode = req.params.atnode;
     if (atnode == undefined || atnode == ''){
         res.json({err:'未提供删除节点'});
         return;
@@ -52,12 +52,13 @@ exports.rename = function(req, res){
         return;
     }
     var has = false;
-    var err = null;
+    var error = null;
     var data = {};
     async.series([
         function(cb){
             var sql = "select count(1) as c from department where name=?";
             query(sql, [node, atnode], function(err, rows){
+                error = err;
                 if (rows[0].c > 0){
                     has = true;
                 }
@@ -68,15 +69,18 @@ exports.rename = function(req, res){
             if (!has){
                 var sql = "update department set name=? where name=?";
                 query(sql, [node, atnode], function(err, rows){
+                    error = err;
                     data = rows[0];
                     cb();
                 })
             }else{
-                data = {result: -1};
+                error = '名字已经存在';
+                data = {};
+                cb();
             }
         },
     ], function(){
-        res.json({err: err, data: data});
+        res.json({err: error, data: data});
     });
 };
 
