@@ -8,7 +8,6 @@ app.controller('DepartmentCtrl', function ($scope, departmentService, $log, $tim
         $scope.treeFamily = treeData(data);
     }, function (data) {
         $scope.error = '异常 ' + data.err;
-        $scope.hasError = true;
     });
 
     $scope.$on('department_tree', function () {
@@ -16,12 +15,23 @@ app.controller('DepartmentCtrl', function ($scope, departmentService, $log, $tim
             $scope.treeFamily = treeData(data);
         }, function (data) {
             $scope.error = '异常 ' + data.err;
-            $scope.hasError = true;
         });
     });
 
+    $scope.$on('department_error', function(event, data){
+        console.log(data);
+        $scope.error = data;
+        $scope.hasError = true;
+    });
+
+    $scope.hideError = function(){
+        $scope.hasError = false
+    }
     $scope.hasError = false;
 
+    /*$timeout(function(){
+        $scope.checked = true;
+    }, 2000)*/
 });
 
 app.directive("dtree", function (RecursionHelper) {
@@ -48,33 +58,51 @@ app.directive("dtree", function (RecursionHelper) {
 });
 
 app.directive('dnode', function () {
-    return {
-        restrict: 'A',
-        scope: {
-            data: '='
-        },
-        controller: function ($scope, departmentService) {
-            $scope.nodeAdd = function (atnode) {
-                departmentService.nodeAdd($scope.childName, atnode);
-            };
-            $scope.nodeAddChild = function (atnode) {
-                departmentService.nodeAddChild($scope.childName, atnode);
-            };
-            $scope.nodeRename = function (atnode) {
-                departmentService.nodeRename($scope.newName, atnode);
-            };
-            $scope.nodeRemove = function(atnode){
-                departmentService.nodeRemove(atnode);
+        return {
+            restrict: 'A',
+            scope: {
+                data: '='
+            },
+            controller: function ($scope, departmentService, $rootScope) {
+                $scope.nodeAdd = function (atnode) {
+                    departmentService.nodeAdd($scope.nodeName, atnode).then(function () {
+                        $rootScope.$broadcast('department_tree', {});
+                    }, function (data) {
+                        $rootScope.$broadcast('department_error', data.err);
+                    });
+                };
+                $scope.nodeAddChild = function (atnode) {
+                    departmentService.nodeAddChild($scope.childName, atnode).then(function () {
+                        $rootScope.$broadcast('department_tree', {});
+                    }, function (data) {
+                        $rootScope.$broadcast('department_error', data.err);
+                    });
+                };
+                $scope.nodeRename = function (atnode) {
+                    departmentService.nodeRename($scope.newName, atnode).then(function () {
+                        $rootScope.$broadcast('department_tree', {});
+                    }, function (data) {
+                        $rootScope.$broadcast('department_error', data.err);
+                    });
+                };
+                $scope.nodeRemove = function (atnode) {
+                    departmentService.nodeRemove(atnode).then(function () {
+                        $rootScope.$broadcast('department_tree', {});
+                    }, function (data) {
+                        $rootScope.$broadcast('department_error', data.err);
+                    });
+                };
+            },
+            templateUrl: 'dnode.html',
+            link: function (scope, element) {
+                element.find('>button').bind('click', function () {
+                    $(this).next('.node-input').toggleClass('hide');
+                    $(this).toggleClass('active').blur();
+                })
             }
-        },
-        templateUrl: 'dnode.html',
-        link: function (scope, element) {
-            element.find('button').bind('click', function () {
-                $(this).next('.node-input').toggleClass('hide');
-            })
         }
     }
-})
+)
 function treeData(data) {
     var paths = [];
     for (var i in data) {

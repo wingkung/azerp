@@ -1,4 +1,5 @@
 var query = require('../config/db').query;
+var async = require('async');
 exports.list = function(req, res){
     var sql = "call department_show()";
     query(sql, function(err, rows){
@@ -7,9 +8,9 @@ exports.list = function(req, res){
 };
 
 exports.add = function(req, res){
-    var isChild = req.body.isChild | 0;
+    var isChild = req.body.isChild || 0;
     var node = req.body.node;
-    var atnode = req.body.adnode | '';
+    var atnode = req.body.atnode || '';
 
     if (atnode == undefined ){
         res.json({err:'未提供添加节点位置'});
@@ -50,10 +51,32 @@ exports.rename = function(req, res){
         res.json({err:'未提供添加节点'});
         return;
     }
-
-    var sql = "update department set name=? where name=?";
-    query(sql, [node, atnode], function(err, rows){
-        res.json({err: err, data: rows[0]});
-    })
+    var has = false;
+    var err = null;
+    var data = {};
+    async.series([
+        function(cb){
+            var sql = "select count(1) as c from department where name=?";
+            query(sql, [node, atnode], function(err, rows){
+                if (rows[0].c > 0){
+                    has = true;
+                }
+                cb();
+            })
+        },
+        function(cb){
+            if (!has){
+                var sql = "update department set name=? where name=?";
+                query(sql, [node, atnode], function(err, rows){
+                    data = rows[0];
+                    cb();
+                })
+            }else{
+                data = {result: -1};
+            }
+        },
+    ], function(){
+        res.json({err: err, data: data});
+    });
 };
 

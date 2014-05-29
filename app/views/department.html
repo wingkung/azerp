@@ -1,4 +1,5 @@
-<div class="alert-warning alert hide" ng-show="hasError"><strong>错误:</strong>{{error}}<button class="close" ng-click="hasError = false">&times;</button></div>
+
+<div ng-show="hasError"><div class="alert-warning alert"><strong>错误:</strong>{{error}}<button class="close" ng-click="hideError()">&times;</button></div></div>
 <div class="tree well" family="treeFamily">
     <ul dtree family="treeFamily"></ul>
 </div>
