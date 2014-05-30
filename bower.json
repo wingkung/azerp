@@ -16,7 +16,8 @@
     "respond": "~1.4.2",
     "html5shiv": "~3.7.2",
     "bootstrap": "*",
-    "normalize.css": "~3.0.1"
+    "normalize.css": "~3.0.1",
+    "typeahead.js": "~0.10.2"
   },
   "devDependencies": {
     "angular-mocks": "*",
