@@ -28,29 +28,12 @@ app.directive("tree", function ($timeout) {
     }
 });
 
-app.directive('formInput', function () {
-    return {
-        restrict: 'A',
-        scope: {
-            label: '@',
-            input: '=',
-            col: '@'
-        },
-        template: '<div class="col-md-{{col}}">' +
-            '<div class="form-group">' +
-            '<label>{{label}}</label>' +
-            '<input class="form-control input-sm" ng-model="input">' +
-            '</div>' +
-            '</div>'
-    }
-});
-
-app.directive('typeahead', function () {
+app.directive('typeahead', function ($timeout) {
     return {
         restrict: 'A',
         scope: {
             remote: '@',
-            value: '='
+            item: "="
         },
         link: function (scope, element) {
             var items = new Bloodhound({
@@ -69,9 +52,23 @@ app.directive('typeahead', function () {
                     displayKey: 'value',
                     source: items.ttAdapter()
                 }).on("typeahead:selected", function(e, item){
-                    scope.value = item;
+                    console.log(item);
+                    scope.$apply(function(){
+                        scope.item = item;
+                    })
+                }).on("typeahead:closed", function(){
+                    $(this).val(scope.item.value);
                 })
         }
     }
 });
+
+app.directive('button', function(){
+    return {
+        restrict: 'E',
+        link: function(scope, element){
+            element.tooltip({placement:'top'})
+        }
+    }
+})
 

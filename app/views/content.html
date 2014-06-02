@@ -8,4 +8,13 @@
     <div ng-switch-when="work_order_accept">
         <div ng-include="'views/work_order_accept.html'" ng-controller="WorkOrderAcceptCtrl"></div>
     </div>
+    <div ng-switch-when="work_order_dispatch">
+        <div ng-include="'views/work_order_dispatch.html'" ng-controller="WorkOrderDispatchCtrl"></div>
+    </div>
+    <div ng-switch-when="work_order_handle">
+        <div ng-include="'views/work_order_handle.html'" ng-controller="WorkOrderHandleCtrl"></div>
+    </div>
+    <div ng-switch-when="work_order">
+        <div ng-include="'views/work_order.html'" ng-controller="WorkOrderCtrl"></div>
+    </div>
 </div>
