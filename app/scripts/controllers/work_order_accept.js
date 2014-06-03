@@ -8,5 +8,4 @@ app.controller('WorkOrderAcceptCtrl', function($scope){
     $scope.test = function(){
         console.log($scope.userInfo.item);
     }
-
 });
