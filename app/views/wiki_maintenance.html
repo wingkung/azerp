@@ -1,7 +1,7 @@
 <div class="col-md-8">
     <div ng-show="hasError"><div class="alert-warning alert"><strong>错误:</strong>{{error}}<button class="close" ng-click="hideError()">&times;</button></div></div>
     <div class="tree well" family="treeFamily">
-        <ul dtree family="treeFamily"></ul>
+        <ul wtree family="treeFamily"></ul>
     </div>
 </div>
 <div class="col-md-4">
@@ -13,8 +13,8 @@
 
 <script type="text/ng-template" id="wtree.html">
     <li ng-repeat="child in family.children">
-        <div dnode data="child"></div>
-        <ul dtree family="child" ng-if="child.children.length > 0"></ul>
+        <div wnode data="child"></div>
+        <ul wtree family="child" ng-if="child.children.length > 0"></ul>
     </li>
 </script>
 
