@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <p>来电历史</p>
+
+    </div>
+    <div class="panel-body">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>用户号码</label>
+                <input class="form-control input-sm">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>起始时间</label>
+                <input class="form-control input-sm">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>结束时间</label>
+                <input class="form-control input-sm">
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>号码</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-class-odd="active"></tr>
+        </tbody>
+    </table>
+</div>

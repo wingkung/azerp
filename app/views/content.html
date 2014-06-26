@@ -20,4 +20,19 @@
     <div ng-switch-when="wiki_maintenance">
         <div ng-include="'views/wiki_maintenance.html'" ng-controller="WikiMaintenanceCtrl"></div>
     </div>
+    <div ng-switch-when="record">
+        <div ng-include="'views/record.html'" ng-controller="RecordCtrl"></div>
+    </div>
+    <div ng-switch-when="call_his">
+        <div ng-include="'views/call_his.html'" ng-controller="CallHisCtrl"></div>
+    </div>
+    <div ng-switch-when="blacklist">
+        <div ng-include="'views/blacklist.html'" ng-controller="BlacklistCtrl"></div>
+    </div>
+    <div ng-switch-when="vip">
+        <div ng-include="'views/vip.html'" ng-controller="VipCtrl"></div>
+    </div>
+    <div ng-switch-when="voice_message">
+        <div ng-include="'views/voice_message.html'" ng-controller="VoiceMessageCtrl"></div>
+    </div>
 </div>

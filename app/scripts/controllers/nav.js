@@ -1,5 +1,5 @@
 var app = angular.module('azerpApp');
-app.controller('NavCtrl', function ($scope, $rootScope) {
+app.controller('NavCtrl', function ($scope, $rootScope, $timeout) {
     $scope.groups = [
         {title: '工单管理', items: [
             {title: '工单受理', href: 'work_order_accept'},
@@ -35,7 +35,7 @@ app.controller('NavCtrl', function ($scope, $rootScope) {
         ]},
         {title: '话务管理', items: [
             {title: '录音查询', href: 'record'},
-            {title: '来电历史', href: 'call_history'},
+            {title: '来电历史', href: 'call_his'},
             {title: '黑名单', href: 'blacklist'},
             {title: '白名单', href: 'vip'},
             {title: '留言查询', href: 'voice_message'}
@@ -45,6 +45,7 @@ app.controller('NavCtrl', function ($scope, $rootScope) {
             {title: '密码修改', href: 'password'}
         ]}
     ];
+
     $scope.contentSwitch = function(data){
         $rootScope.$broadcast('content_switch', data);
     }

@@ -4,6 +4,9 @@ exports.route = function(app){
     app.post('/api/department', department.add);
     app.put('/api/department', department.rename);
     app.delete('/api/department/:atnode', department.remove);
+
+
+
 };
 
 

@@ -1,5 +1,6 @@
 'use strict';
 
-angular.module('azerpApp')
-    .controller('MainCtrl', function($scope){
-    });
+var app = angular.module('azerpApp');
+app.controller('MainCtrl', function($scope){
+
+});

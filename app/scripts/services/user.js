@@ -42,4 +42,4 @@ angular.module('ngWork')
         };
 
         return service;
-    })
+    });
