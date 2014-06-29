@@ -1,12 +1,18 @@
-<div class="col-md-8">
-    <div ng-show="hasError"><div class="alert-warning alert"><strong>错误:</strong>{{error}}<button class="close" ng-click="hideError()">&times;</button></div></div>
-    <div class="tree well" family="treeFamily">
-        <ul wtree family="treeFamily"></ul>
+<div ng-controller="WikiMaintenanceCtrl">
+    <div class="col-md-8">
+        <div ng-show="hasError">
+            <div class="alert-warning alert"><strong>错误:</strong>{{error}}
+                <button class="close" ng-click="hideError()">&times;</button>
+            </div>
+        </div>
+        <div class="tree well" family="treeFamily">
+            <ul wtree family="treeFamily"></ul>
+        </div>
     </div>
-</div>
-<div class="col-md-4">
-    <div class="list-group">
-        <a href="" class="list-group-item"></a>
+    <div class="col-md-4">
+        <div class="list-group">
+            <a href="" class="list-group-item"></a>
+        </div>
     </div>
 </div>
 
@@ -23,7 +29,7 @@
              ng-class="{'glyphicon-leaf': data.children.length == 0, 'glyphicon-minus-sign': data.children.length > 0}"></i> {{data.name}}</span>
     <button class="btn btn-xs btn-default">子项</button>
     <div class="node-input hide">
-        <input class="" ng-model="childName" >
+        <input class="" ng-model="childName">
         <button class="btn btn-xs btn-success" ng-click="nodeAddChild(data.name)">提交</button>
     </div>
 

@@ -1,159 +1,161 @@
-<!-- 基本信息 -->
-<div class="panel panel-default">
-    <div class="panel-heading clearfix">
-        <p class="panel-title pull-left">
-            基本信息
-        </p>
+<div ng-controller="WorkOrderAcceptCtrl">
+    <!-- 基本信息 -->
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <p class="panel-title pull-left">
+                基本信息
+            </p>
 
-        <div class="btn-group btn-group-xs pull-right">
-            <button class="btn btn-default" title="把客户加入黑名单">黑名单</button>
-            <button class="btn btn-default" title="查询客户">查询</button>
-            <button class="btn btn-default" title="添加客户">添加</button>
+            <div class="btn-group btn-group-xs pull-right">
+                <button class="btn btn-default" title="把客户加入黑名单">黑名单</button>
+                <button class="btn btn-default" title="查询客户">查询</button>
+                <button class="btn btn-default" title="添加客户">添加</button>
+            </div>
         </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="text-muted">姓名</label>
+                        <input required class="form-control input-sm" ng-model="userInfo.name">
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <label>称呼</label>
+                        <select required class="form-control input-sm" ng-model="userInfo.sex"
+                                ng-options="sex.value as sex.display for sex in sexes"></select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>联系人</label>
+                        <input class="form-control input-sm" ng-model="userInfo.contact">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>电话</label>
+                        <input required class="form-control input-sm" ng-model="userInfo.phone">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>省/直辖市</label>
+                        <select class="form-control input-sm" ng-model="userInfo.province"></select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>市/辖区</label>
+                        <select class="form-control input-sm" ng-model="userInfo.city"></select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>区</label>
+                        <select class="form-control input-sm" ng-model="userInfo.district"></select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>地址</label>
+                        <input class="form-control input-sm" ng-model="userInfo.address">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <table class="table"></table>
     </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="text-muted">姓名</label>
-                    <input required class="form-control input-sm" ng-model="userInfo.name">
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                    <label>称呼</label>
-                    <select required class="form-control input-sm" ng-model="userInfo.sex"
-                            ng-options="sex.value as sex.display for sex in sexes"></select>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>联系人</label>
-                    <input class="form-control input-sm" ng-model="userInfo.contact">
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label>电话</label>
-                    <input required class="form-control input-sm" ng-model="userInfo.phone">
-                </div>
+
+    <!--<input class="form-control input-sm" typeahead ng-model="userInfo.item.value" item="userInfo.item" remote="data.json">
+            <button ng-click="test()">test</button>-->
+
+    <!--工单信息-->
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <p class="panel-title pull-left">
+                工单信息
+            </p>
+
+            <div class="btn-group btn-group-xs pull-right">
+                <button class="btn btn-default" title="结束受理">归档</button>
+                <button class="btn btn-default" title="等待处理">保存</button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>省/直辖市</label>
-                    <select class="form-control input-sm" ng-model="userInfo.province"></select>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>工单描述</label>
+                        <textarea class="form-control input-sm" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>责任部门</label>
+                        <select class="form-control input-sm"></select>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>市/辖区</label>
-                    <select class="form-control input-sm" ng-model="userInfo.city"></select>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>工单结果</label>
+                        <textarea class="form-control input-sm" rows="2"></textarea>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>区</label>
-                    <select class="form-control input-sm" ng-model="userInfo.district"></select>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label>备注</label>
+                        <textarea class="form-control input-sm" rows="2"></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>地址</label>
-                    <input class="form-control input-sm" ng-model="userInfo.address">
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <table class="table"></table>
-</div>
-
-<!--<input class="form-control input-sm" typeahead ng-model="userInfo.item.value" item="userInfo.item" remote="data.json">
-        <button ng-click="test()">test</button>-->
-
-<!--工单信息-->
-<div class="panel panel-default">
-    <div class="panel-heading clearfix">
-        <p class="panel-title pull-left">
-            工单信息
-        </p>
-
-        <div class="btn-group btn-group-xs pull-right">
-            <button class="btn btn-default" title="结束受理">归档</button>
-            <button class="btn btn-default" title="等待处理">保存</button>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label>工单描述</label>
-                    <textarea class="form-control input-sm" rows="2"></textarea>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label>责任部门</label>
-                    <select class="form-control input-sm"></select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label>工单结果</label>
-                    <textarea class="form-control input-sm" rows="2"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-10">
-                <div class="form-group">
-                    <label>备注</label>
-                    <textarea class="form-control input-sm" rows="2"></textarea>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--历史工单-->
-<div class="panel panel-default">
-    <div class="panel-heading clearfix">
-        <p class="panel-title pull-left">
-            历史工单
-        </p>
-
-
-        <div class="btn-group btn-group-xs pull-right col-md-2">
-            <div class="input-group input-group-sm">
-                <select class="form-control"></select>
-                <span class="input-group-addon">天</span>
             </div>
         </div>
     </div>
-    <div class="panel-body">
-    </div>
-</div>
 
-<!--历史来电-->
-<div class="panel panel-default">
-    <div class="panel-heading clearfix">
-        <p class="panel-title pull-left">
-            历史来电
-        </p>
+    <!--历史工单-->
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <p class="panel-title pull-left">
+                历史工单
+            </p>
 
-        <div class="btn-group btn-group-xs pull-right col-md-2">
-            <div class="input-group input-group-sm">
-                <select class="form-control"></select>
-                <span class="input-group-addon">天</span>
+
+            <div class="btn-group btn-group-xs pull-right col-md-2">
+                <div class="input-group input-group-sm">
+                    <select class="form-control"></select>
+                    <span class="input-group-addon">天</span>
+                </div>
             </div>
         </div>
+        <div class="panel-body">
+        </div>
     </div>
-    <div class="panel-body">
+
+    <!--历史来电-->
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <p class="panel-title pull-left">
+                历史来电
+            </p>
+
+            <div class="btn-group btn-group-xs pull-right col-md-2">
+                <div class="input-group input-group-sm">
+                    <select class="form-control"></select>
+                    <span class="input-group-addon">天</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+        </div>
     </div>
 </div>
