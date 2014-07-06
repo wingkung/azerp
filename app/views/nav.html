@@ -1,14 +1,11 @@
-<div class="panel-group">
-    <div class="panel panel-default" ng-repeat="group in groups">
-        <div class="panel-heading">
-            <h4 class="panel-title" nav-group>
-                {{group.title}}
-            </h4>
-        </div>
-        <div class="list-group hide">
-            <a ng-click="contentSwitch(item.href)" href="" class="list-group-item" ng-repeat="item in group.items" nav-group-item>
-                {{item.title}}
-            </a>
+<div class="ui vertical menu" ng-controller="NavCtrl">
+    <div class="item">
+        <div class="ui input"><input type="text" placeholder="查询..."></div>
+    </div>
+    <div class="item" ng-repeat="group in groups">
+        {{group.title}}
+        <div class="menu">
+            <a class="item" ng-repeat="item in group.item">{{item.title}}</a>
         </div>
     </div>
 </div>
