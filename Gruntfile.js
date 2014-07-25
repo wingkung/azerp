@@ -1,4 +1,3 @@
-// Generated on 2014-05-08 using generator-angular 0.8.0
 'use strict';
 
 // # Globbing
@@ -34,7 +33,7 @@ module.exports = function (grunt) {
         watch: {
             bower: {
                 files: ['bower.json'],
-                tasks: ['bowerInstall']
+                tasks: ['wiredep']
             },
             js: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
@@ -135,7 +134,7 @@ module.exports = function (grunt) {
         },
 
         // Automatically inject Bower components into the app
-        bowerInstall: {
+        wiredep: {
             app: {
                 src: ['<%= yeoman.app %>/index.html'],
                 ignorePath: '<%= yeoman.app %>/'
@@ -223,10 +222,10 @@ module.exports = function (grunt) {
             }
         },
 
-        // ngmin tries to make the code safe for minification automatically by
+        // ngAnnotate tries to make the code safe for minification automatically by
         // using the Angular long form for dependency injection. It doesn't work on
         // things like resolve or inject so those have to be done manually.
-        ngmin: {
+        ngAnnotate: {
             dist: {
                 files: [
                     {
@@ -323,7 +322,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
-            'bowerInstall',
+            'wiredep',
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',
@@ -339,12 +338,12 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'bowerInstall',
+        'wiredep',
         'useminPrepare',
         'concurrent:dist',
         'autoprefixer',
         'concat',
-        'ngmin',
+        'ngAnnotate',
         'copy:dist',
         'cssmin',
         'uglify',
